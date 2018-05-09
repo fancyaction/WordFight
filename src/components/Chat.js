@@ -33,12 +33,11 @@ export default class Chat extends Component {
 
       // 1. Make copy of existing state
       const messages = { ...this.state.messages };
-      // 2. Add new fish to fishes variable
+      // 2. Add new message to messages variable
       messages[`message${Date.now()}`] = message;
-      // 3. Set new fishes object to state
+      // 3. Set new message object to state
       this.setState({ messages });
 
-      // ev.currentTarget.reset();
     }
   };
 
@@ -51,7 +50,7 @@ export default class Chat extends Component {
         <h1>{chatLog.map(this.renderChat)}</h1>
         <div id="nameRow">
           <label for="name">Name:</label>
-          <input type="text" ref={this.nameRef} id="name" />
+          <input type="text" ref={this.nameRef} id="name" placeholder="Enter username here" />
         </div>
         <div id="chatWindow" ref={this.chatWindowRef}>
           <ul id="messageList" ref={this.messageListRef} />
