@@ -12,22 +12,23 @@ export default class Chat extends Component {
   messageRef = React.createRef();
 
   renderChat = key => {
-    console.log(key);
+    const message = this.state.messages[key];
+    // const comment = this.state.messages.comment[key];
+    console.log(message.comment);
     
     return (
       <li key={key}>
-        {key.name}: {key.message}
+        {message.name}: {message.comment}
       </li>
     );
   };
 
   handleMessage = ev => {
-    if (ev.keyCode == 13) {
-      console.log("test one-two what is this?");
+    if (ev.keyCode === 13) {
 
       const message = {
         name: this.nameRef.value.value,
-        message: this.messageRef.value.value
+        comment: this.messageRef.value.value
       };
 
       // 1. Make copy of existing state
@@ -43,7 +44,8 @@ export default class Chat extends Component {
 
   render() {
     const chatLog = Object.keys(this.state.messages);
-
+    console.log(chatLog);
+    
     return (
       <div>
         <h1>{chatLog.map(this.renderChat)}</h1>
