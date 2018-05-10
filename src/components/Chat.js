@@ -1,56 +1,68 @@
 import React, { Component } from "react";
-import { firebaseApp } from "../base.js";
+import base, { firebaseApp } from "../base.js";
 
 export default class Chat extends Component {
   state = {
-    messages: {}
+    message: "",
+    messages: []
   };
 
-  nameRef = React.createRef();
-  chatWindowRef = React.createRef();
-  messageListRef = React.createRef();
-  messageRef = React.createRef();
+  // Check and update Firebase with chat
+  componentDidMount() {
+    const messagesRef = firebaseApp
+      .database()
+      .ref()
+      .child("messages");
 
-  renderChat = key => {
-    const message = this.state.messages[key];
-    // const comment = this.state.messages.comment[key];
-    console.log(message.comment);
-    
+    messagesRef.on("value", snap => {
+      const currentMessages = snap.val();
+
+      if (currentMessages != null) {
+        this.setState({
+          messages: currentMessages
+        });
+      }
+    });
+  }
+
+  // Output messages as list items in chat
+  renderChat = (message, i) => {
+
     return (
-      <li key={key}>
+      <li key={message.id}>
         {message.name}: {message.comment}
       </li>
     );
   };
 
+  // When user presses enter, submit message to Firebase
   handleMessage = ev => {
     if (ev.keyCode === 13) {
-
+      // NOTE: Add if statement to determine player later.
+      const player1Name = this.props.player1Name;
+      const player2Name = this.props.player2Name;
       const message = {
-        name: this.nameRef.value.value,
-        comment: this.messageRef.value.value
+        id: this.state.messages.length,
+        name: player1Name,
+        comment: ev.target.value
       };
 
-      // 1. Make copy of existing state
-      const messages = { ...this.state.messages };
-      // 2. Add new message to messages variable
-      messages[`message${Date.now()}`] = message;
-      // 3. Set new message object to state
-      this.setState({ messages });
-
+      firebaseApp
+        .database()
+        .ref("messages/" + message.id)
+        .set(message);
     }
   };
 
   render() {
-    const chatLog = Object.keys(this.state.messages);
-    console.log(chatLog);
-    
+    // Create chatlog from messages in state
+    const chatLog = this.state.messages.map(this.renderChat);
+
     return (
       <div>
-        <h1>{chatLog.map(this.renderChat)}</h1>
+        <ul id='chatWindow'>{chatLog}</ul>
         <div id="nameRow">
-          <label for="name">Name:</label>
-          <input type="text" ref={this.nameRef} id="name" placeholder="Enter username here" />
+          <p>Name: <strong>{this.props.player1Name}</strong></p>
         </div>
         <div id="chatWindow" ref={this.chatWindowRef}>
           <ul id="messageList" ref={this.messageListRef} />
@@ -58,9 +70,8 @@ export default class Chat extends Component {
         <div>
           <input
             type="text"
-            ref={this.messageRef}
             id="message"
-            placeholder="Something witty here..."
+            placeholder="Enter your comment here"
             onKeyDown={this.handleMessage}
           />
         </div>
