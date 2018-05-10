@@ -4,12 +4,19 @@ import base from "../base.js";
 
 export default class App extends Component {
   state = {
-    wordList: {}
+    wordList: {},
+    player1Name: 'TestPlayer1',
+    player2Name: 'TestPlayer2',
+    player1Score: 0,
+    player2Score: 0
   };
+
   render() {
     return (
       <div>
-        <Chat />
+        {/* <Score />
+        <Game /> */}
+        <Chat player1Name={this.state.player1Name} player2Name={this.state.player2Name} />
       </div>
     );
   }
