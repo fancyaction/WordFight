@@ -1,3 +1,22 @@
 #chatWindow {
-    list-style-type: none;
-  }
+  list-style-type: none;
+}
+
+body {
+  font-family: "HelveticaNeue-Light";
+}
+.msg {
+  margin: 10px 0;
+  padding: 10px;
+  width: 400px;
+  background-color: #efefef;
+}
+#comment {
+  margin-right: 5px;
+}
+#submit {
+  padding: 0.5em 1em;
+  background-color: #50b1ff;
+  border: none;
+  color: #fff;
+}
