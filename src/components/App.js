@@ -16,6 +16,9 @@ export default class App extends Component {
     player2Score: 0
   };
 
+  // Add Function: Create room code
+  // Add Function: Button copies room code to share with player 2 (outside app)
+
   // Enter player name and determine if player 1 or 2
   enterName = ev => {
     const name = this.nameRef.value.value;
