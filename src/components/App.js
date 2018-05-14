@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Chat from "./Chat.js";
+import Score from "./Score.js";
+import Game from "./Game.js";
 import base from "../base.js";
 
 export default class App extends Component {
@@ -32,8 +34,8 @@ export default class App extends Component {
           <button id='nameBut' onClick={this.enterName}>Enter Name</button>
           
         </div>
-        {/* <Score />
-        <Game /> */}
+        <Score />
+        <Game />
         <Chat
           player1Name={this.state.player1Name}
           player2Name={this.state.player2Name}
