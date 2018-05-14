@@ -16,12 +16,20 @@ export default class App extends Component {
     player2Score: 0
   };
 
+  // Enter player name and determine if player 1 or 2
   enterName = ev => {
     const name = this.nameRef.value.value;
-    this.setState({
-      player1Name: name
-    });
+    if (this.state.player1Name === '') {
+      this.setState({
+        player1Name: name
+      });
+    } else {
+      this.setState({
+        player2Name: name
+      });
+    }
 
+    // Remove name input 
     document.getElementById('playerNameField').remove();
     document.getElementById('nameBut').remove();
     }
