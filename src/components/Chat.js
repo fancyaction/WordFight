@@ -16,7 +16,7 @@ export default class Chat extends Component {
       .ref()
       .child("messages");
 
-    messagesRef.on("value", snap => {
+    messagesRef.limitToLast(10).on("value", snap => {
       const currentMessages = snap.val();
 
       if (currentMessages != null) {
