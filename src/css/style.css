@@ -11,10 +11,11 @@ body {
   width: 400px;
   background-color: #efefef;
 }
-#comment {
+input[type='text'] {
   margin-right: 5px;
 }
-#submit {
+
+button {
   padding: 0.5em 1em;
   background-color: #50b1ff;
   border: none;
