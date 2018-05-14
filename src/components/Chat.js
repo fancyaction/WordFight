@@ -3,7 +3,7 @@ import base, { firebaseApp } from "../base.js";
 
 export default class Chat extends Component {
   commentRef = React.createRef();
-  
+
   state = {
     message: "",
     messages: []
@@ -41,22 +41,25 @@ export default class Chat extends Component {
 
   // When user presses enter, submit message to Firebase
   handleMessage = ev => {
-      // NOTE: Add if statement to determine player later.
-      const player1Name = this.props.player1Name;
-      const player2Name = this.props.player2Name;
-      // console.log(player1Name, player2Name);
-      
-      const message = {
-        id: this.state.messages.length,
-        name: player1Name,
-        comment: this.commentRef.value.value
-      };
+    // NOTE: Add if statement to determine player later.
+    let playerComment = this.commentRef.value.value;
+    const player1Name = this.props.player1Name;
+    const player2Name = this.props.player2Name;
 
-      firebaseApp
-        .database()
-        .ref("messages/" + message.id)
-        .set(message);
+    const message = {
+      id: this.state.messages.length,
+      name: player1Name,
+      comment: playerComment
     };
+
+    firebaseApp
+      .database()
+      .ref("messages/" + message.id)
+      .set(message);
+    console.log(this.props.comment);
+    
+    this.commentRef.value.value = '';
+  };
 
   pressEnter = ev => {
     if (ev.keyCode === 13) {
